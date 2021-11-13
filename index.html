@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="test7">
+        <div id="new">my inner tab
+            <div id="id1"> Hello id 1
+                <!-- <div id="id2">
+                    <div id="id3">
+                        <div id="id4">This is id 4</div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div id="test">test</div>
+    <div id="test1">test1</div>
+    <div id="test2">test2</div>
+    <div id="test3">test3</div>
+    <div id="test4">test4</div>
+    <div id="test5">test5</div>
+    <div id="test6">test6</div>
+
+
+    <script>
+        function cloneElementMethod(id) {
+            let data = document.body.children;
+            if (!data[id]) {
+                for (let element of data) {
+                    if (element.children.length) {
+                        let res = subCloneElementMethod(element, id)
+                        if (res.status) {
+                            console.log(`Text for id ${id} is ${res.response}`)
+                            return res.response;
+                        }
+                    }
+                }
+                return 'No data found';
+            } else {
+                console.log(`Text for id ${id} is ${data[id]['innerText']}`)
+                return data[id]['innerText']
+            }
+
+            // return document.body.children..innerText;
+        }
+        /** 
+         * @desc method check if element have also child
+        */
+        function subCloneElementMethod(element, id) {
+            let subElement = element.children;
+            if (!subElement[id]) {
+                //@desc this loop run child have subChild
+                for (let ele of subElement) {
+                    if (ele.children.length) {
+                        let res = subCloneElementMethod(ele, id)
+                        if (res.status) {
+                            console.log(`Text for id ${id} is ${res.response}`)
+                            return res.response;
+                        }
+                    }
+                }
+                return { response: null, status: false };
+            } else {
+                console.log(`Text for id ${id} is ${subElement[id]['innerText']}`)
+                return { response: subElement[id]['innerText'], status: true };
+            }
+        }
+        cloneElementMethod("new")
+        cloneElementMethod("id1")
+        cloneElementMethod("test1")
+        cloneElementMethod("test2")
+        cloneElementMethod("test3")
+        cloneElementMethod("test4")
+        cloneElementMethod("test5")
+        cloneElementMethod("new")
+        cloneElementMethod("test")
+    </script>
+</body>
+
+</html>
